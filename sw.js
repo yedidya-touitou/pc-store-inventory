@@ -1,5 +1,16 @@
-var C="inv-v1",F=["./","index.html","manifest.json","icon-192.png","icon-512.png"];
-self.addEventListener("install",function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(F)}));self.skipWaiting()});
-self.addEventListener("activate",function(e){e.waitUntil(self.clients.claim())});
-self.addEventListener("fetch",function(e){if(e.request.method!=="GET"||new URL(e.request.url).origin!==location.origin)return;
-e.respondWith(fetch(e.request).then(function(r){var x=r.clone();caches.open(C).then(function(c){c.put(e.request,x)});return r}).catch(function(){return caches.match(e.request)}))});
+// Network-first: תמיד מנסה להביא את הגרסה העדכנית, ורק בלי אינטרנט משתמש בעותק שמור
+const CACHE = "inventory-v1";
+self.addEventListener("install", e => self.skipWaiting());
+self.addEventListener("activate", e => {
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+});
+self.addEventListener("fetch", e => {
+  if (e.request.method !== "GET") return;
+  e.respondWith(
+    fetch(e.request).then(r => {
+      const copy = r.clone();
+      caches.open(CACHE).then(c => c.put(e.request, copy));
+      return r;
+    }).catch(() => caches.match(e.request))
+  );
+});
