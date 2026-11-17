@@ -2,277 +2,138 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f6b57"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><title>מלאי מחשבים</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מלאי חנות מחשבים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f3f5f4;--card:#fff;--ink:#14231f;--mut:#5d6e68;--line:#d9e0dd;--ac:#0f6b57;--acink:#fff;--bad:#b3261e;--tint:#e4f0ec;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1715;--card:#18221f;--ink:#e8f0ed;--mut:#93a39d;--line:#2a3733;--ac:#3fbf9f;--acink:#06241c;--bad:#ff8a80;--tint:#1d2e29}}
-:root[data-theme="dark"]{--bg:#0f1715;--card:#18221f;--ink:#e8f0ed;--mut:#93a39d;--line:#2a3733;--ac:#3fbf9f;--acink:#06241c;--bad:#ff8a80;--tint:#1d2e29}
+:root{--bg:#eef1f4;--card:#fff;--ink:#17222d;--mute:#6b7885;--line:#d9dfe5;--acc:#0b6e69;--neg:#b3261e;--head:#dfe6ec}
+@media (prefers-color-scheme:dark){:root{--bg:#10171d;--card:#18222b;--ink:#e8eef3;--mute:#93a1ae;--line:#2a3743;--acc:#4cc9c0;--neg:#ff8a80;--head:#1f2c37}}
 *{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Heebo","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.45}
-.wrap{max-width:900px;margin:0 auto;padding:16px}
-h1{font-size:1.6rem;margin:4px 0 14px;font-weight:800}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
-.st{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.st b{display:block;font-size:1.15rem}.st span{color:var(--mut);font-size:.82rem}
-.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-input,select,textarea,button{font:inherit;color:var(--ink)}
-input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
-.bar input{flex:1 1 180px;width:auto}.bar select{flex:0 1 130px;width:auto}
-button{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:9px 14px}
-button.p{background:var(--ac);color:var(--acink);border-color:var(--ac);font-weight:700}
-button.d{color:var(--bad)}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
-.item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;border-inline-start:5px solid var(--ac)}
-.item.lap{border-inline-start-color:#c77d1a}
-.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.nm{font-weight:700;font-size:1.05rem}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
-.tag{background:var(--tint);border-radius:99px;padding:2px 10px;font-size:.8rem}
-.spec{color:var(--mut);font-size:.92rem;white-space:pre-wrap;margin:4px 0 8px}
-.pr{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;font-size:.9rem}
-.pr span{color:var(--mut);display:block;font-size:.78rem}
-.pr b{font-size:1rem}
-.act{display:flex;gap:6px;margin-top:10px}.act button{padding:5px 12px;font-size:.88rem}
-.qty{font-weight:700;white-space:nowrap}
-.empty{text-align:center;color:var(--mut);padding:30px 10px}
-dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);width:min(520px,94vw);padding:16px;max-height:92vh}
-dialog::backdrop{background:rgba(0,0,0,.5)}
-label{display:block;font-size:.88rem;margin:10px 0 4px;color:var(--mut)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.hint{font-size:.82rem;color:var(--mut);margin-top:8px;background:var(--tint);padding:8px 10px;border-radius:8px}
-.row{display:flex;gap:8px;margin-top:14px}.row button{flex:1}
-.adds{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.adds button{flex:1 1 200px;padding:14px;font-weight:700;font-size:1rem}
-#status{display:none;background:var(--tint);border-radius:8px;padding:10px 12px;margin-bottom:12px}
-.rv{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:10px}
-.rv .h{display:flex;gap:8px;align-items:center}.rv .h input[type=checkbox]{width:auto}
-.rv .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
-.rv label{margin:4px 0 2px;font-size:.78rem}
-.rv small{color:var(--mut)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Heebo,Arial,sans-serif;padding:12px;max-width:900px;margin-inline:auto}
+h1{font-size:1.3rem;margin:8px 0 12px;font-weight:800}
+.bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+input,select,button{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 10px}
+.bar input{flex:1;min-width:140px}
+button{cursor:pointer;font-weight:600}
+button.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.8rem;color:var(--mute)}
+.sum b{display:block;font-size:1.05rem;color:var(--ink)}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+section>h2{margin:0;padding:10px 12px;background:var(--head);font-size:1rem;display:flex;justify-content:space-between}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:620px}
+th,td{padding:8px 10px;text-align:start;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--mute);font-weight:600;font-size:.78rem}
+td.n{font-variant-numeric:tabular-nums}
+.pos{color:var(--acc);font-weight:600}.neg{color:var(--neg);font-weight:600}
+td button{padding:4px 8px;font-size:.8rem}
+.empty{padding:14px;color:var(--mute)}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);width:min(92vw,420px);padding:16px}
+dialog::backdrop{background:#0007}
+label{display:block;font-size:.82rem;color:var(--mute);margin-top:10px}
+dialog input,dialog select{width:100%;margin-top:4px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.calc{margin-top:12px;font-size:.88rem;color:var(--mute)}
+.calc b{color:var(--ink)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>מלאי מחשבים</h1>
-  <div class="stats">
-    <div class="st"><b id="sCount">0</b><span>מחשבים במלאי</span></div>
-    <div class="st"><b id="sCost">0</b><span>עלות מלאי (לפני מע״מ)</span></div>
-    <div class="st"><b id="sSale">0</b><span>שווי מכירה (כולל מע״מ)</span></div>
-    <div class="st"><b id="sProfit">0</b><span>רווח צפוי (לפני מע״מ)</span></div>
-  </div>
-  <div class="adds" id="adds" hidden>
-    <button class="p" id="bSticker">צילום מדבקת מחיר</button>
-    <button class="p" id="bInvoice">צילום חשבונית</button>
-  </div>
-  <div id="status" role="status"></div>
-  <input type="file" id="fileSC" accept="image/*" capture="environment" hidden>
-  <input type="file" id="fileS" accept="image/*" hidden>
-  <input type="file" id="fileI" accept="image/*" multiple hidden>
-  <div class="bar">
-    <input id="q" placeholder="חיפוש לפי שם, מותג או מפרט" aria-label="חיפוש">
-    <select id="fType" aria-label="סוג"><option value="">כל הסוגים</option><option>נייד</option><option>נייח</option></select>
-    <select id="fBrand" aria-label="מותג"><option value="">כל המותגים</option></select>
-    <button id="add">הוספה ידנית</button>
-  </div>
-  <div id="list"></div>
-  <div class="bar" style="margin-top:14px"><button id="exp">ייצוא לגיבוי</button><button id="imp">שחזור מגיבוי</button><input type="file" id="file" accept=".json" hidden></div>
-  <p class="hint">המלאי נשמר במכשיר הזה בלבד. מומלץ לייצא גיבוי מדי פעם.</p>
+<h1>מלאי חנות מחשבים</h1>
+<div class="bar">
+  <input id="q" placeholder="חיפוש פריט…" aria-label="חיפוש">
+  <button class="pri" id="add">פריט חדש</button>
 </div>
-
-<dialog id="sdlg">
-  <h2 style="margin:0 0 6px">צילום מדבקת מחיר</h2>
-  <div class="row" style="flex-direction:column">
-    <button class="p" id="sCam">מצלמה</button>
-    <button class="p" id="sGal">תמונה מהגלריה</button>
-    <button id="sCancel">ביטול</button>
-  </div>
-</dialog>
+<div class="sum" id="sum"></div>
+<main id="list"></main>
 
 <dialog id="dlg">
-  <h2 id="dt" style="margin:0 0 6px">מחשב חדש</h2>
-  <label>שם המחשב</label><input id="fName" placeholder="לדוגמה: ThinkPad E14 Gen 5">
-  <div class="g2">
-    <div><label>מותג</label><input id="fBr" list="brands" placeholder="Lenovo, HP, Dell..."><datalist id="brands"></datalist></div>
-    <div><label>סוג</label><select id="fTy"><option>נייד</option><option>נייח</option></select></div>
-  </div>
-  <label>מפרט</label><textarea id="fSpec" rows="3" placeholder="מעבד, זיכרון, דיסק, מסך..."></textarea>
-  <div class="g2">
-    <div><label>עלות לפני מע״מ (₪)</label><input id="fCost" type="number" min="0" step="any" inputmode="decimal"></div>
-    <div><label>מחיר מכירה כולל מע״מ (₪)</label><input id="fSale" type="number" min="0" step="any" inputmode="decimal"></div>
-  </div>
-  <label>כמות במלאי</label><input id="fQty" type="number" min="0" step="1" value="1" inputmode="numeric">
-  <div class="hint" id="calc">הרווח יחושב אחרי הזנת המחירים.</div>
-  <div class="row"><button class="p" id="save">שמירה</button><button id="cancel">ביטול</button></div>
-</dialog>
-
-<dialog id="rdlg">
-  <h2 style="margin:0 0 4px">מחשבים שזוהו בחשבונית</h2>
-  <div class="hint">בדקו את הפרטים והזינו מחיר מכירה כולל מע״מ לכל מחשב. אפשר לבטל סימון של שורה שלא רוצים להוסיף.</div>
-  <div id="rlist"></div>
-  <div class="row"><button class="p" id="rsave">הוספה למלאי</button><button id="rcancel">ביטול</button></div>
+  <form method="dialog" id="f">
+    <b id="dt">פריט חדש</b>
+    <label>קטגוריה<select id="cat"></select></label>
+    <label>שם הפריט<input id="name" required></label>
+    <div class="row">
+      <label>כמות<input id="qty" type="number" min="0" step="1" value="1" required></label>
+      <label>מחיר עלות (לפני מע״מ)<input id="cost" type="number" min="0" step="0.01" required></label>
+    </div>
+    <label>מחיר ללקוח (כולל מע״מ)<input id="price" type="number" min="0" step="0.01" required></label>
+    <div class="calc" id="calc"></div>
+    <div class="row" style="margin-top:14px">
+      <button type="button" id="cancel">ביטול</button>
+      <button class="pri" value="ok">שמירה</button>
+    </div>
+  </form>
 </dialog>
 
 <script>
-var VAT=0.18,KEY="pc-inventory-v1",items=[],editId=null;
-var $=function(i){return document.getElementById(i)};
-var fmt=function(n){return Math.round(n).toLocaleString("he-IL")+" ₪"};
-function load(){try{items=JSON.parse(localStorage.getItem(KEY)||"[]")||[]}catch(e){items=[]}}
-var dbDoc=null;
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}
-  if(dbDoc){try{dbDoc.set({items:items,updated:Date.now()}).catch(function(){})}catch(e){}}}
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function profit(it){return it.sale/(1+VAT)-it.cost}
-function brands(){var s={};items.forEach(function(i){if(i.brand)s[i.brand]=1});return Object.keys(s).sort()}
+const VAT = 0.18; // שיעור מע״מ – אפשר לשנות כאן
+const CATS = ["מעבדים","לוחות אם","כרטיסי מסך","זיכרון RAM","אחסון (SSD/HDD)","ספקי כוח","מארזים","קירור","מחשבים מורכבים","אחר"];
+const KEY = "pc-inventory-v1";
+let items = [];
+try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { items = []; }
+let editId = null;
+const $ = id => document.getElementById(id);
+const fmt = n => "₪" + n.toLocaleString("he-IL",{minimumFractionDigits:0,maximumFractionDigits:2});
+const profitUnit = i => i.price/(1+VAT) - i.cost;
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch(e){} };
+
+$("cat").innerHTML = CATS.map(c=>`<option>${c}</option>`).join("");
+
 function render(){
-  var cur=$("fBrand").value,b=brands();
-  $("fBrand").innerHTML='<option value="">כל המותגים</option>'+b.map(function(x){return'<option'+(x===cur?' selected':'')+'>'+esc(x)+'</option>'}).join("");
-  $("brands").innerHTML=b.map(function(x){return'<option value="'+esc(x)+'">'}).join("");
-  var q=$("q").value.trim().toLowerCase(),t=$("fType").value,br=$("fBrand").value;
-  var v=items.filter(function(i){
-    return(!t||i.type===t)&&(!br||i.brand===br)&&(!q||(i.name+" "+i.brand+" "+i.spec).toLowerCase().indexOf(q)>-1)});
-  var c=0,co=0,sa=0,pr=0;
-  items.forEach(function(i){c+=i.qty;co+=i.cost*i.qty;sa+=i.sale*i.qty;if(i.sale)pr+=profit(i)*i.qty});
-  $("sCount").textContent=c;$("sCost").textContent=fmt(co);$("sSale").textContent=fmt(sa);$("sProfit").textContent=fmt(pr);
-  if(!v.length){$("list").innerHTML='<div class="empty">'+(items.length?"לא נמצאו מחשבים לפי הסינון.":"המלאי ריק. לחצו על ״הוספת מחשב״ כדי להתחיל.")+'</div>';return}
-  $("list").innerHTML=v.map(function(i){
-    var p=profit(i),m=i.sale?p/(i.sale/(1+VAT))*100:0;
-    return'<div class="item '+(i.type==="נייד"?"lap":"")+'"><div class="top"><div><div class="nm">'+esc(i.name)+'</div><div class="tags"><span class="tag">'+esc(i.brand||"ללא מותג")+'</span><span class="tag">'+esc(i.type)+'</span></div></div><div class="qty">כמות: '+i.qty+'</div></div>'+
-    (i.spec?'<div class="spec">'+esc(i.spec)+'</div>':'')+
-    '<div class="pr"><div><span>עלות לפני מע״מ</span><b>'+fmt(i.cost)+'</b></div><div><span>מחיר ללקוח כולל מע״מ</span><b>'+(i.sale?fmt(i.sale):'טרם הוגדר')+'</b></div><div><span>רווח ליחידה</span><b style="color:'+(p<0?'var(--bad)':'var(--ac)')+'">'+(i.sale?fmt(p)+' ('+m.toFixed(0)+'%)':'—')+'</b></div></div>'+
-    '<div class="act"><button data-e="'+i.id+'">עריכה</button><button data-s="'+i.id+'">מכרתי יחידה</button><button class="d" data-d="'+i.id+'">מחיקה</button></div></div>'}).join("")}
+  const q = $("q").value.trim().toLowerCase();
+  const shown = items.filter(i=>!q || i.name.toLowerCase().includes(q));
+  const totQty = items.reduce((s,i)=>s+i.qty,0);
+  const totCost = items.reduce((s,i)=>s+i.cost*i.qty,0);
+  const totProfit = items.reduce((s,i)=>s+profitUnit(i)*i.qty,0);
+  $("sum").innerHTML = `<div>יחידות במלאי<b>${totQty}</b></div><div>שווי עלות (לפני מע״מ)<b>${fmt(totCost)}</b></div><div>רווח צפוי (לפני מע״מ)<b>${fmt(totProfit)}</b></div>`;
+  let html = "";
+  for (const c of CATS) {
+    const rows = shown.filter(i=>i.cat===c);
+    if (!rows.length && !(c==="מעבדים" && !q)) continue;
+    const cp = rows.reduce((s,i)=>s+profitUnit(i)*i.qty,0);
+    html += `<section><h2><span>${c}</span><span>${rows.length} פריטים</span></h2>`;
+    if (!rows.length) html += `<div class="empty">אין עדיין מעבדים. לחץ על ״פריט חדש״.</div>`;
+    else html += `<div class="wrap"><table><tr><th>שם</th><th>כמות</th><th>עלות (לפני מע״מ)</th><th>ללקוח (כולל מע״מ)</th><th>רווח ליחידה</th><th>סה״כ רווח</th><th></th></tr>` +
+      rows.map(i=>{const pu=profitUnit(i), t=pu*i.qty, cls=pu>=0?"pos":"neg";
+        return `<tr><td>${esc(i.name)}</td><td class="n">${i.qty}</td><td class="n">${fmt(i.cost)}</td><td class="n">${fmt(i.price)}</td><td class="n ${cls}">${fmt(pu)}</td><td class="n ${cls}">${fmt(t)}</td><td><button onclick="edit('${i.id}')">עריכה</button> <button onclick="del('${i.id}')">מחיקה</button></td></tr>`}).join("") +
+      `<tr><th colspan="5">סה״כ ${c}</th><th class="${cp>=0?"pos":"neg"}">${fmt(cp)}</th><th></th></tr></table></div>`;
+    html += `</section>`;
+  }
+  $("list").innerHTML = html || `<div class="empty">לא נמצאו פריטים.</div>`;
+}
+const esc = s => s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+
 function calc(){
-  var c=parseFloat($("fCost").value),s=parseFloat($("fSale").value);
-  if(isNaN(c)||isNaN(s)){$("calc").textContent="הרווח יחושב אחרי הזנת המחירים.";return}
-  var net=s/(1+VAT);
-  $("calc").textContent="מחיר מכירה לפני מע״מ: "+fmt(net)+" · רווח ליחידה: "+fmt(net-c)}
-function openDlg(it){
-  editId=it?it.id:null;$("dt").textContent=it?"עריכת מחשב":"מחשב חדש";
-  $("fName").value=it?it.name:"";$("fBr").value=it?it.brand:"";$("fTy").value=it?it.type:"נייד";
-  $("fSpec").value=it?it.spec:"";$("fCost").value=it?it.cost:"";$("fSale").value=it?it.sale:"";$("fQty").value=it?it.qty:1;
-  calc();$("dlg").showModal()}
-$("add").onclick=function(){openDlg(null)};
-$("cancel").onclick=function(){$("dlg").close()};
-$("fCost").oninput=calc;$("fSale").oninput=calc;
-$("save").onclick=function(){
-  var n=$("fName").value.trim(),c=parseFloat($("fCost").value),s=parseFloat($("fSale").value);
-  if(!n){$("fName").focus();return}
-  if(isNaN(c)||isNaN(s)){$("calc").textContent="יש להזין עלות ומחיר מכירה.";return}
-  var o={name:n,brand:$("fBr").value.trim(),type:$("fTy").value,spec:$("fSpec").value.trim(),cost:c,sale:s,qty:Math.max(0,parseInt($("fQty").value)||0)};
-  if(editId){items=items.map(function(i){return i.id===editId?Object.assign({id:editId},o):i})}
-  else{o.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);items.unshift(o)}
-  persist();$("dlg").close();render()};
-$("list").onclick=function(e){
-  var b=e.target.closest("button");if(!b)return;
-  if(b.dataset.e)openDlg(items.find(function(i){return i.id===b.dataset.e}));
-  if(b.dataset.s){items.forEach(function(i){if(i.id===b.dataset.s&&i.qty>0)i.qty--});persist();render()}
-  if(b.dataset.d&&confirm("למחוק את המחשב מהמלאי?")){items=items.filter(function(i){return i.id!==b.dataset.d});persist();render()}};
-["q","fType","fBrand"].forEach(function(id){$(id).oninput=render});
-$("exp").onclick=function(){
-  var a=document.createElement("a");a.href="data:application/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(items));a.download="inventory-backup.json";a.click()};
-$("imp").onclick=function(){$("file").click()};
-$("file").onchange=function(){
-  var f=this.files[0];if(!f)return;var r=new FileReader();
-  r.onload=function(){try{var d=JSON.parse(r.result);if(Array.isArray(d)&&confirm("להחליף את המלאי הנוכחי בגיבוי?")){items=d;persist();render()}}catch(e){alert("קובץ הגיבוי לא תקין.")}};
-  r.readAsText(f)};
+  const c=+$("cost").value||0, p=+$("price").value||0, qn=+$("qty").value||0;
+  const pu = p/(1+VAT)-c;
+  $("calc").innerHTML = `מחיר ללקוח לפני מע״מ: <b>${fmt(p/(1+VAT))}</b><br>רווח ליחידה: <b>${fmt(pu)}</b> · סה״כ רווח: <b>${fmt(pu*qn)}</b>`;
+}
+["cost","price","qty"].forEach(id=>$(id).addEventListener("input",calc));
+$("q").addEventListener("input",render);
 
-var maxImg=8;
-var smp={json:gem};
-function getKey(){try{return localStorage.getItem("gk")||""}catch(e){return""}}
-function b64(b){return new Promise(function(r){var f=new FileReader();f.onload=function(){r(String(f.result).split(",")[1])};f.readAsDataURL(b)})}
-async function gem(prompt,o){
-  var k=getKey();
-  if(!k){k=(window.prompt("הדביקו מפתח Gemini חינמי (נוצר ב-aistudio.google.com/apikey)")||"").trim();
-    if(!k)throw{code:"nokey"};try{localStorage.setItem("gk",k)}catch(e){}}
-  var parts=[{text:prompt}];
-  for(var i=0;i<o.images.length;i++)parts.push({inline_data:{mime_type:"image/jpeg",data:await b64(o.images[i])}});
-  var url="https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key="+encodeURIComponent(k);
-  var body=JSON.stringify({contents:[{parts:parts}],generationConfig:{responseMimeType:"application/json",temperature:0}});
-  var r;
-  for(var a=0;a<3;a++){
-    var ac=new AbortController(),tm=setTimeout(function(){ac.abort()},60000);
-    try{r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:body,signal:ac.signal});clearTimeout(tm)}
-    catch(e){clearTimeout(tm);if(a<2){status("אין תגובה, מנסה שוב…");await new Promise(function(z){setTimeout(z,2000)});continue}
-      throw{code:e&&e.name==="AbortError"?"timeout":"net"}}
-    if(r.status>=500&&a<2){status("השרת עמוס, מנסה שוב…");await new Promise(function(z){setTimeout(z,3000)});continue}
-    break}
-  if(r.status>=500)throw{code:"busy"};
-  if(r.status===400||r.status===403){try{localStorage.removeItem("gk")}catch(e){}throw{code:"badkey"}}
-  if(r.status===429)throw{code:"rate_limited"};
-  if(!r.ok)throw{code:"err"};
-  var d=await r.json(),t=d.candidates[0].content.parts[0].text;
-  return JSON.parse(t.replace(/```json|```/g,"").trim())}
-
-function status(t){var e=$("status");e.style.display=t?"block":"none";e.textContent=t||""}
-function errTxt(e){var c=e&&e.code;
-  if(c==="nokey")return"כדי לזהות תמונות צריך מפתח Gemini חינמי.";if(c==="badkey")return"המפתח לא תקין. לחצו שוב על הצילום והדביקו מפתח חדש.";
-  if(c==="timeout")return"הבקשה לקחה יותר מדי זמן. בדקו חיבור לאינטרנט ונסו שוב, או צלמו תמונה אחת קטנה יותר.";if(c==="net")return"אין חיבור לשרת הזיהוי. בדקו את האינטרנט ונסו שוב.";if(c==="busy")return"שרת הזיהוי עמוס כרגע. נסו שוב בעוד דקה.";
-  if(c==="rate_limited")return"יותר מדי בקשות. נסו שוב בעוד רגע.";
-  return"לא הצלחתי לקרוא את התמונה. נסו לצלם שוב באור טוב ובצורה ישרה."}
-function shrink(f){return new Promise(function(res,rej){
-  var u=URL.createObjectURL(f),im=new Image();
-  im.onload=function(){var k=Math.min(1,1800/Math.max(im.width,im.height)),c=document.createElement("canvas");
-    c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-    URL.revokeObjectURL(u);c.toBlob(function(b){b?res(b):rej(new Error("x"))},"image/jpeg",0.85)};
-  im.onerror=function(){URL.revokeObjectURL(u);rej(new Error("x"))};im.src=u})}
-var COMMON='Reply with JSON only, no text around it. Text values in the original language of the document; "type" must be exactly "נייד" (laptop) or "נייח" (desktop/all-in-one/mini PC). "spec" is a short multi-line summary (CPU, RAM, storage, screen, GPU if shown). Numbers are plain numbers without currency symbols.';
-function num(v){var n=parseFloat(String(v).replace(/[^0-9.]/g,""));return isNaN(n)?0:n}
-async function scanSticker(f){
-  status("מזהה את המדבקה…");
-  try{
-    var b=await shrink(f);
-    var d=await smp.json('This is a photo of a price sticker on a computer box in an Israeli computer store. Extract the computer. '+COMMON+' Format: {"name":"model name","brand":"brand","type":"נייד","spec":"...","sale":0}. "sale" is the customer price shown on the sticker, as a number (assume it includes VAT). Use "" or 0 for anything not visible.',{images:[b],modelTier:"default"});
-    status("");
-    openDlg(null);
-    $("fName").value=d.name||"";$("fBr").value=d.brand||"";$("fTy").value=d.type==="נייח"?"נייח":"נייד";
-    $("fSpec").value=d.spec||"";$("fSale").value=num(d.sale)||"";$("fCost").value="";calc();
-    $("calc").textContent="זוהה מהמדבקה. בדקו את הפרטים והזינו את העלות לפני מע״מ.";
-  }catch(e){status(errTxt(e))}}
-var found=[];
-async function scanInvoice(files){
-  status("קורא את החשבונית…");
-  try{
-    var bl=[];for(var i=0;i<files.length&&i<maxImg;i++)bl.push(await shrink(files[i]));
-    var d=await smp.json('These are photos of a supplier invoice (tax invoice, חשבונית מס) to a computer store in Israel. The photo may be tilted, rotated or have shadows; read it carefully. The text is Hebrew, right to left. The invoice has a table of line items with columns like: # | מק״ט (SKU) | תיאור (description) | כמות (qty) | מט (currency, NS = shekel) | מחיר יח׳ (unit price) | מחיר שקלי (price in NIS) | סה״כ ש״ח (line total in NIS). List ONLY the line items that are computers (laptops, desktops, all-in-one, mini PCs). Ignore accessories, monitors, software, shipping, warranties, parts and anything else. Ignore the document-level footer (discount, VAT, grand total, payment terms, customer and supplier details). '+COMMON+' Format: [{"name":"model name as written in the description, without the brand and without the word נייד/נייח","brand":"brand","type":"נייד","sku":"the SKU/מק״ט of the line","spec":"...","qty":1,"line_total":0,"cost":0}]. "qty" is the quantity of that line. "line_total" is the line total in NIS before VAT, read from the line\'s total column. "cost" is the price of ONE unit in NIS before VAT: if the line shows unit prices before VAT use that; if only prices including VAT are shown, divide by 1.18. Make sure qty × cost equals line_total. If the description has no specs, use "" for spec; do not invent specs. Return [] if there are no computers.',{images:bl,modelTier:"default"});
-    if(!Array.isArray(d))d=d&&d.items||[];
-    status("");
-    if(!d.length){status("לא נמצאו מחשבים בחשבונית.");return}
-    found=d.map(function(x){
-      var q=Math.max(1,parseInt(x.qty)||1),lt=num(x.line_total),c=num(x.cost);
-      if(lt>0)c=lt/q;
-      var sp=(x.spec||"").trim(),sk=(x.sku||"").trim();
-      if(sk&&sp.indexOf(sk)<0)sp=(sp?sp+"\n":"")+"מק״ט: "+sk;
-      return{on:true,name:x.name||"",brand:x.brand||"",type:x.type==="נייח"?"נייח":"נייד",spec:sp,cost:Math.round(c*100)/100,qty:q,sale:""}});
-    drawRv();$("rdlg").showModal();
-  }catch(e){status(errTxt(e))}}
-function drawRv(){
-  $("rlist").innerHTML=found.map(function(x,i){
-    return'<div class="rv"><div class="h"><input type="checkbox" data-i="'+i+'" data-k="on"'+(x.on?" checked":"")+' aria-label="הוספה"><input data-i="'+i+'" data-k="name" value="'+esc(x.name)+'"></div>'+
-    '<small>'+esc(x.brand||"ללא מותג")+' · '+esc(x.type)+'</small>'+
-    '<div class="g3"><div><label>עלות לפני מע״מ</label><input type="number" step="any" inputmode="decimal" data-i="'+i+'" data-k="cost" value="'+x.cost+'"></div>'+
-    '<div><label>כמות</label><input type="number" min="1" inputmode="numeric" data-i="'+i+'" data-k="qty" value="'+x.qty+'"></div>'+
-    '<div><label>מכירה כולל מע״מ</label><input type="number" step="any" inputmode="decimal" data-i="'+i+'" data-k="sale" value="'+x.sale+'"></div></div></div>'}).join("")}
-$("rlist").oninput=function(e){var t=e.target,i=t.dataset.i;if(i==null)return;var k=t.dataset.k;
-  found[i][k]=k==="on"?t.checked:(k==="name"?t.value:t.value)};
-$("rcancel").onclick=function(){$("rdlg").close()};
-$("rsave").onclick=function(){
-  found.forEach(function(x){if(!x.on||!x.name.trim())return;
-    items.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:x.name.trim(),brand:x.brand,type:x.type,spec:x.spec,cost:num(x.cost),sale:num(x.sale),qty:Math.max(1,parseInt(x.qty)||1)})});
-  persist();$("rdlg").close();render()};
-$("bSticker").onclick=function(){$("sdlg").showModal()};
-$("sCam").onclick=function(){$("sdlg").close();$("fileSC").value="";$("fileSC").click()};
-$("sGal").onclick=function(){$("sdlg").close();$("fileS").value="";$("fileS").click()};
-$("sCancel").onclick=function(){$("sdlg").close()};
-$("fileSC").onchange=function(){if(this.files[0])scanSticker(this.files[0])};
-$("bInvoice").onclick=function(){$("fileI").value="";$("fileI").click()};
-$("fileS").onchange=function(){if(this.files[0])scanSticker(this.files[0])};
-$("fileI").onchange=function(){if(this.files.length)scanInvoice(this.files)};
-$("adds").hidden=false;
-
-load();render();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
+function openDlg(i){
+  editId = i ? i.id : null;
+  $("dt").textContent = i ? "עריכת פריט" : "פריט חדש";
+  $("cat").value = i ? i.cat : "מעבדים";
+  $("name").value = i ? i.name : "";
+  $("qty").value = i ? i.qty : 1;
+  $("cost").value = i ? i.cost : "";
+  $("price").value = i ? i.price : "";
+  calc(); $("dlg").showModal();
+}
+window.edit = id => openDlg(items.find(i=>i.id===id));
+window.del = id => { if(confirm("למחוק את הפריט?")){ items = items.filter(i=>i.id!==id); save(); render(); } };
+$("add").onclick = () => openDlg(null);
+$("cancel").onclick = () => $("dlg").close();
+$("f").addEventListener("submit", e => {
+  if (e.submitter && e.submitter.value !== "ok") return;
+  const d = {cat:$("cat").value,name:$("name").value.trim(),qty:+$("qty").value,cost:+$("cost").value,price:+$("price").value};
+  if (editId) Object.assign(items.find(i=>i.id===editId), d);
+  else items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6), ...d});
+  save(); render();
+});
+render();
 </script>
 </body>
 </html>
