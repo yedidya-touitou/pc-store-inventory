@@ -188,8 +188,17 @@ async function gem(prompt,o){
     if(!k)throw{code:"nokey"};try{localStorage.setItem("gk",k)}catch(e){}}
   var parts=[{text:prompt}];
   for(var i=0;i<o.images.length;i++)parts.push({inline_data:{mime_type:"image/jpeg",data:await b64(o.images[i])}});
-  var r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key="+encodeURIComponent(k),
-    {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:parts}],generationConfig:{responseMimeType:"application/json"}})});
+  var url="https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key="+encodeURIComponent(k);
+  var body=JSON.stringify({contents:[{parts:parts}],generationConfig:{responseMimeType:"application/json"}});
+  var r;
+  for(var a=0;a<3;a++){
+    var ac=new AbortController(),tm=setTimeout(function(){ac.abort()},60000);
+    try{r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:body,signal:ac.signal});clearTimeout(tm)}
+    catch(e){clearTimeout(tm);if(a<2){status("אין תגובה, מנסה שוב…");await new Promise(function(z){setTimeout(z,2000)});continue}
+      throw{code:e&&e.name==="AbortError"?"timeout":"net"}}
+    if(r.status>=500&&a<2){status("השרת עמוס, מנסה שוב…");await new Promise(function(z){setTimeout(z,3000)});continue}
+    break}
+  if(r.status>=500)throw{code:"busy"};
   if(r.status===400||r.status===403){try{localStorage.removeItem("gk")}catch(e){}throw{code:"badkey"}}
   if(r.status===429)throw{code:"rate_limited"};
   if(!r.ok)throw{code:"err"};
@@ -199,6 +208,7 @@ async function gem(prompt,o){
 function status(t){var e=$("status");e.style.display=t?"block":"none";e.textContent=t||""}
 function errTxt(e){var c=e&&e.code;
   if(c==="nokey")return"כדי לזהות תמונות צריך מפתח Gemini חינמי.";if(c==="badkey")return"המפתח לא תקין. לחצו שוב על הצילום והדביקו מפתח חדש.";
+  if(c==="timeout")return"הבקשה לקחה יותר מדי זמן. בדקו חיבור לאינטרנט ונסו שוב, או צלמו תמונה אחת קטנה יותר.";if(c==="net")return"אין חיבור לשרת הזיהוי. בדקו את האינטרנט ונסו שוב.";if(c==="busy")return"שרת הזיהוי עמוס כרגע. נסו שוב בעוד דקה.";
   if(c==="rate_limited")return"יותר מדי בקשות. נסו שוב בעוד רגע.";
   return"לא הצלחתי לקרוא את התמונה. נסו לצלם שוב באור טוב ובצורה ישרה."}
 function shrink(f){return new Promise(function(res,rej){
