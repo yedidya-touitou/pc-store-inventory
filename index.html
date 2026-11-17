@@ -68,6 +68,7 @@ label{display:block;font-size:.88rem;margin:10px 0 4px;color:var(--mut)}
     <button class="p" id="bInvoice">צילום חשבונית</button>
   </div>
   <div id="status" role="status"></div>
+  <input type="file" id="fileSC" accept="image/*" capture="environment" hidden>
   <input type="file" id="fileS" accept="image/*" hidden>
   <input type="file" id="fileI" accept="image/*" multiple hidden>
   <div class="bar">
@@ -80,6 +81,15 @@ label{display:block;font-size:.88rem;margin:10px 0 4px;color:var(--mut)}
   <div class="bar" style="margin-top:14px"><button id="exp">ייצוא לגיבוי</button><button id="imp">שחזור מגיבוי</button><input type="file" id="file" accept=".json" hidden></div>
   <p class="hint">המלאי נשמר במכשיר הזה בלבד. מומלץ לייצא גיבוי מדי פעם.</p>
 </div>
+
+<dialog id="sdlg">
+  <h2 style="margin:0 0 6px">צילום מדבקת מחיר</h2>
+  <div class="row" style="flex-direction:column">
+    <button class="p" id="sCam">מצלמה</button>
+    <button class="p" id="sGal">תמונה מהגלריה</button>
+    <button id="sCancel">ביטול</button>
+  </div>
+</dialog>
 
 <dialog id="dlg">
   <h2 id="dt" style="margin:0 0 6px">מחשב חדש</h2>
@@ -236,7 +246,11 @@ $("rsave").onclick=function(){
   found.forEach(function(x){if(!x.on||!x.name.trim())return;
     items.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:x.name.trim(),brand:x.brand,type:x.type,spec:x.spec,cost:num(x.cost),sale:num(x.sale),qty:Math.max(1,parseInt(x.qty)||1)})});
   persist();$("rdlg").close();render()};
-$("bSticker").onclick=function(){$("fileS").value="";$("fileS").click()};
+$("bSticker").onclick=function(){$("sdlg").showModal()};
+$("sCam").onclick=function(){$("sdlg").close();$("fileSC").value="";$("fileSC").click()};
+$("sGal").onclick=function(){$("sdlg").close();$("fileS").value="";$("fileS").click()};
+$("sCancel").onclick=function(){$("sdlg").close()};
+$("fileSC").onchange=function(){if(this.files[0])scanSticker(this.files[0])};
 $("bInvoice").onclick=function(){$("fileI").value="";$("fileI").click()};
 $("fileS").onchange=function(){if(this.files[0])scanSticker(this.files[0])};
 $("fileI").onchange=function(){if(this.files.length)scanInvoice(this.files)};
