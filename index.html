@@ -189,7 +189,7 @@ async function gem(prompt,o){
   var parts=[{text:prompt}];
   for(var i=0;i<o.images.length;i++)parts.push({inline_data:{mime_type:"image/jpeg",data:await b64(o.images[i])}});
   var url="https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key="+encodeURIComponent(k);
-  var body=JSON.stringify({contents:[{parts:parts}],generationConfig:{responseMimeType:"application/json"}});
+  var body=JSON.stringify({contents:[{parts:parts}],generationConfig:{responseMimeType:"application/json",temperature:0}});
   var r;
   for(var a=0;a<3;a++){
     var ac=new AbortController(),tm=setTimeout(function(){ac.abort()},60000);
@@ -235,11 +235,16 @@ async function scanInvoice(files){
   status("קורא את החשבונית…");
   try{
     var bl=[];for(var i=0;i<files.length&&i<maxImg;i++)bl.push(await shrink(files[i]));
-    var d=await smp.json('These are photos of a supplier invoice to a computer store in Israel. List ONLY the computers (laptops, desktops, all-in-one, mini PCs). Ignore accessories, monitors, software, shipping, warranties, parts and anything else. '+COMMON+' Format: [{"name":"model name","brand":"brand","type":"נייד","spec":"...","cost":0,"qty":1}]. "cost" is the price of ONE unit before VAT: if the invoice lists unit prices before VAT use them; if only prices including VAT are shown, divide by 1.18. "qty" is the quantity. Return [] if there are no computers.',{images:bl,modelTier:"default"});
+    var d=await smp.json('These are photos of a supplier invoice (tax invoice, חשבונית מס) to a computer store in Israel. The photo may be tilted, rotated or have shadows; read it carefully. The text is Hebrew, right to left. The invoice has a table of line items with columns like: # | מק״ט (SKU) | תיאור (description) | כמות (qty) | מט (currency, NS = shekel) | מחיר יח׳ (unit price) | מחיר שקלי (price in NIS) | סה״כ ש״ח (line total in NIS). List ONLY the line items that are computers (laptops, desktops, all-in-one, mini PCs). Ignore accessories, monitors, software, shipping, warranties, parts and anything else. Ignore the document-level footer (discount, VAT, grand total, payment terms, customer and supplier details). '+COMMON+' Format: [{"name":"model name as written in the description, without the brand and without the word נייד/נייח","brand":"brand","type":"נייד","sku":"the SKU/מק״ט of the line","spec":"...","qty":1,"line_total":0,"cost":0}]. "qty" is the quantity of that line. "line_total" is the line total in NIS before VAT, read from the line\'s total column. "cost" is the price of ONE unit in NIS before VAT: if the line shows unit prices before VAT use that; if only prices including VAT are shown, divide by 1.18. Make sure qty × cost equals line_total. If the description has no specs, use "" for spec; do not invent specs. Return [] if there are no computers.',{images:bl,modelTier:"default"});
     if(!Array.isArray(d))d=d&&d.items||[];
     status("");
     if(!d.length){status("לא נמצאו מחשבים בחשבונית.");return}
-    found=d.map(function(x){return{on:true,name:x.name||"",brand:x.brand||"",type:x.type==="נייח"?"נייח":"נייד",spec:x.spec||"",cost:Math.round(num(x.cost)*100)/100,qty:Math.max(1,parseInt(x.qty)||1),sale:""}});
+    found=d.map(function(x){
+      var q=Math.max(1,parseInt(x.qty)||1),lt=num(x.line_total),c=num(x.cost);
+      if(lt>0)c=lt/q;
+      var sp=(x.spec||"").trim(),sk=(x.sku||"").trim();
+      if(sk&&sp.indexOf(sk)<0)sp=(sp?sp+"\n":"")+"מק״ט: "+sk;
+      return{on:true,name:x.name||"",brand:x.brand||"",type:x.type==="נייח"?"נייח":"נייד",spec:sp,cost:Math.round(c*100)/100,qty:q,sale:""}});
     drawRv();$("rdlg").showModal();
   }catch(e){status(errTxt(e))}}
 function drawRv(){
